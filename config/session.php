@@ -25,10 +25,10 @@ return [
     | Session Lifetime
     |--------------------------------------------------------------------------
     |
-    |Here you can specify the amount of minutes that the session wants
-    | It can be allowed to remain inactive before it expires. If you want them
-    | To expire immediately when the browser is closed, then it can
-    | Indicate that through the expire_on_close configuration option.
+    | Here you may specify the number of minutes that you wish the session
+    | to be allowed to remain idle before it expires. If you want them
+    | to expire immediately when the browser is closed then you may
+    | indicate that via the expire_on_close configuration option.
     |
     */
 

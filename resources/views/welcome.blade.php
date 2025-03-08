@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'welcome')
+@section('title', 'Inicio')
 
 @section('content')
-    <h1 class="text-xl font-semibold">welcome</h1>
+    <h1 class="text-xl font-semibold">Inicio</h1>
 @endsection

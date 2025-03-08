@@ -5,13 +5,13 @@
 @section('content')
     <h1 class="text-xl font-semibold mb-6">Gestión</h1>
 
-    <div x-data="{ tab: 'personal' }" class="space-y-4">
+    <div x-data="{ tab: 'veterinario' }" class="space-y-4">
         <div class="flex space-x-4 border-b-2 border-gray-200 w-full">
             <button 
                 @click="tab = 'veterinario'" 
                 :class="tab === 'veterinario' ? 'border-blue-500 text-blue-500' : 'border-transparent hover:border-gray-400'"
                 class="py-2 px-4 border-b-2 font-medium">
-                Veterinario
+                 Veterinario
             </button>
             <button 
                 @click="tab = 'proveedor'" 
@@ -30,38 +30,42 @@
         <div x-show="tab === 'veterinario'" class="p-4 bg-gray-100 rounded-lg">
             <h2 class="text-lg font-semibold">Información de Personal Veterinario</h2>
             <form class="flex flex-col space-y-4">
-                <div class="w-1/3">
-                    <label class="block text-sm font-medium">Tarjeta profesional</label>
-                    <input 
-                        type="text" 
-                        x-data 
-                        x-on:input="$event.target.value = $event.target.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"
-                        class="w-full p-2 border rounded"
-                        maxlength="11">
-                </div>
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Identificación</label>
+                <input 
+                    type="text" 
+                    x-data 
+                    x-on:input="$event.target.value = $event.target.value.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"                        class="w-full p-2 border rounded"
+                    maxlength="11">
+            </div>
             
-                <div class="w-1/3">
-                    <label class="block text-sm font-medium">Nombres</label>
-                    <input 
-                        type="text" 
-                        x-data 
-                        x-on:input="$event.target.value = $event.target.value.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ')" 
-                        class="w-full p-2 border border-gray-400 rounded">
-                </div>
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Nombres</label>
+                <input 
+                    type="text" 
+                    x-data 
+                    x-on:input="$event.target.value = $event.target.value.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ')" 
+                    class="w-full p-2 border border-gray-400 rounded">
+            </div>
             
-                <div class="w-1/3">
-                    <label class="block text-sm font-medium">Apellidos</label>
-                    <input 
-                        type="text" 
-                        x-data 
-                        x-on:input="$event.target.value = $event.target.value.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ')" 
-                        class="w-full p-2 border border-gray-400 rounded">
-                </div>
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Apellidos</label>
+                <input 
+                    type="text" 
+                    x-data 
+                    x-on:input="$event.target.value = $event.target.value.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ')" 
+                    class="w-full p-2 border border-gray-400 rounded">
+            </div>
             
-                <div class="w-1/3">
-                    <label class="block text-sm font-medium">Correo Electrónico</label>
-                    <input type="email" class="w-full p-2 border border-gray-400 rounded">
-                </div>
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Correo Electrónico</label>
+                <input 
+                    type="email"
+                    x-data="{ email: '' }"
+                    x-model="email"
+                    x-on:input="email = email.replace(/[^a-zA-Z0-9@._%+-]/g, '')"
+                    class="w-full p-2 border border-gray-400 rounded">
+            </div>
             
                 <div class="w-1/3">
                     <label class="block text-sm font-medium">Teléfono</label>
@@ -94,7 +98,7 @@
                     </div>
                 </div>
             
-                <div class="w-1/4">
+                <div class="w-1/3">
                     <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
                         Guardar
                     </button>
@@ -113,5 +117,3 @@
         </div>
     </div>
 @endsection
-
-
