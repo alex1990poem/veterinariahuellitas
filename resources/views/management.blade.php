@@ -6,6 +6,7 @@
 <h1 class="text-xl font-semibold mb-6">Gestión</h1>
 
 <div x-data="{ tab: 'veterinario' }" class="space-y-4">
+    <!-- Inicio del código para pestañas --> 
     <div class="flex space-x-4 border-b-2 border-gray-200 w-full">
         <button
             @click="tab = 'veterinario'"
@@ -25,13 +26,21 @@
             class="py-2 px-4 border-b-2 font-medium">
             Cliente
         </button>
+        <button
+            @click="tab = 'mascota'"
+            :class="tab === 'mascota' ? 'border-blue-500 text-blue-500' : 'border-transparent hover:border-gray-400'"
+            class="py-2 px-4 border-b-2 font-medium">
+            Mascota
+        </button>
     </div>
+    <!-- Fin del código para pestañas -->
 
+    <!-- Inicio del código para el contenedor de cada pestaña -->
     <div x-show="tab === 'veterinario'" class="p-4 bg-gray-100 rounded-lg">
         <h2 class="text-lg font-semibold">Información de Personal Veterinario</h2>
 
         <form
-            x-data="formData()"
+            x-data="formVeterinario()"
             x-on:submit.prevent="submitForm"
             class="flex flex-col space-y-4">
             <!-- IDENTIFICACIÓN -->
@@ -39,8 +48,9 @@
                 <label class="block text-sm font-medium">Identificación</label>
                 <input
                     type="text"
-                    x-model="identificacion"
-                    x-on:input="identificacion = identificacion.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"
+                    x-model="dataForm.identificacion"
+                    12345678911
+                    x-on:input="dataForm.identificacion = dataForm.identificacion.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"
                     class="w-full p-2 border rounded"
                     required>
             </div>
@@ -50,8 +60,8 @@
                 <label class="block text-sm font-medium">Nombres</label>
                 <input
                     type="text"
-                    x-model="nombres"
-                    x-on:input="nombres = nombres.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
+                    x-model="dataForm.nombres"
+                    x-on:input="dataForm.nombres = dataForm.nombres.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
                     class="w-full p-2 border rounded"
                     required>
             </div>
@@ -61,8 +71,8 @@
                 <label class="block text-sm font-medium">Apellidos</label>
                 <input
                     type="text"
-                    x-model="apellidos"
-                    x-on:input="apellidos = apellidos.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
+                    x-model="dataForm.apellidos"
+                    x-on:input="dataForm.apellidos = dataForm.apellidos.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
                     class="w-full p-2 border rounded"
                     required>
             </div>
@@ -71,15 +81,15 @@
             <div class="w-1/3">
                 <label class="block text-sm font-medium">Correo Electrónico</label>
                 <input
-                    x-model="email"
+                    x-model="dataForm.email"
                     x-on:input="
-                    email = email.replace(/[^a-zA-Z0-9@._%+\-]/g, '').slice(0, 50);
-                    emailValido = validarEmail(email);
+                    dataForm.email = dataForm.email.replace(/[^a-zA-Z0-9@._%+\-]/g, '').slice(0, 50);
+                    emailValido = validarEmail(dataForm.email);
                 "
                     class="w-full p-2 border rounded"
                     required>
                 <!-- Alertamos solo si hay contenido y no es válido -->
-                <template x-if="email !== '' && !emailValido">
+                <template x-if="dataForm.email !== '' && !emailValido">
                     <p class="mt-1 text-red-500 text-sm">
                         Correo electrónico no válido (ej. usuario@dominio.com).
                     </p>
@@ -91,15 +101,15 @@
                 <label class="block text-sm font-medium">Teléfono</label>
                 <input
                     type="tel"
-                    x-model="telefono"
+                    x-model="dataForm.telefono"
                     x-on:input="
-                    telefono = telefono.replace(/[^0-9]/g, '').slice(0, 10);
-                    telefonoValido = (telefono.length === 10);
+                    dataForm.telefono = dataForm.telefono.replace(/[^0-9]/g, '').slice(0, 10);
+                    telefonoValido = (dataForm.telefono.length === 10);
                 "
                     class="w-full p-2 border rounded"
                     required>
                 <!-- Alertamos si el usuario ya introdujo algo pero no cumple 10 dígitos -->
-                <template x-if="telefono !== '' && !telefonoValido">
+                <template x-if="dataForm.telefono !== '' && !telefonoValido">
                     <p class="mt-1 text-red-500 text-sm">
                         El número de teléfono debe tener exactamente 10 dígitos.
                     </p>
@@ -111,8 +121,8 @@
                 <label class="block text-sm font-medium">Dirección</label>
                 <input
                     type="text"
-                    x-model="direccion"
-                    x-on:input="direccion = direccion.slice(0, 50)"
+                    x-model="dataForm.direccion"
+                    x-on:input="dataForm.direccion = dataForm.direccion.slice(0, 50)"
                     class="w-full p-2 border rounded"
                     required>
             </div>
@@ -121,7 +131,7 @@
             <div class="w-1/3">
                 <label class="block text-sm font-medium">Especialidad</label>
                 <select
-                    x-model="especialidad"
+                    x-model="dataForm.especialidad"
                     class="w-full p-2 border rounded"
                     required>
                     <option value="">Selecciona una especialidad</option>
@@ -137,7 +147,7 @@
             <div class="w-1/3">
                 <label class="block text-sm font-medium">Horario de atención</label>
                 <select
-                    x-model="horario_atencion"
+                    x-model="dataForm.horario_atencion"
                     class="w-full p-2 border rounded"
                     required>
                     <option value="">Seleccione un horario de atención</option>
@@ -161,80 +171,165 @@
 
     <div x-show="tab === 'proveedor'" class="p-4 bg-gray-100 rounded-lg">
         <h2 class="text-lg font-semibold">Información de Proveedor</h2>
-        <p>Contenido relacionado con los proveedores...</p>
+        <form
+            x-data="formProveedor()"
+            x-on:submit.prevent="submitForm"
+            class="flex flex-col space-y-4">
+            <!-- IDENTIFICACIÓN -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Identificación</label>
+                <input
+                    type="text"
+                    x-model="dataForm.identificacion"
+                    x-on:input="dataForm.identificacion = dataForm.identificacion.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- NOMBRES -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Nombres</label>
+                <input
+                    type="text"
+                    x-model="dataForm.nombres"
+                    x-on:input="dataForm.nombres = dataForm.nombres.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- APELLIDOS -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Apellidos</label>
+                <input
+                    type="text"
+                    x-model="dataForm.apellidos"
+                    x-on:input="dataForm.apellidos = dataForm.apellidos.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- CORREO ELECTRÓNICO -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Correo Electrónico</label>
+                <input
+                    x-model="dataForm.email"
+                    x-on:input="
+                    dataForm.email = dataForm.email.replace(/[^a-zA-Z0-9@._%+\-]/g, '').slice(0, 50);
+                    emailValido = validarEmail(dataForm.email);
+                "
+                    class="w-full p-2 border rounded"
+                    required>
+                <!-- Alertamos solo si hay contenido y no es válido -->
+                <template x-if="dataForm.email !== '' && !emailValido">
+                    <p class="mt-1 text-red-500 text-sm">
+                        Correo electrónico no válido (ej. usuario@dominio.com).
+                    </p>
+                </template>
+            </div>
+
+            <!-- TELÉFONO -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Teléfono</label>
+                <input
+                    type="tel"
+                    x-model="dataForm.telefono"
+                    x-on:input="
+                    dataForm.telefono = dataForm.telefono.replace(/[^0-9]/g, '').slice(0, 10);
+                    telefonoValido = (dataForm.telefono.length === 10);
+                "
+                    class="w-full p-2 border rounded"
+                    required>
+                <!-- Alertamos si el usuario ya introdujo algo pero no cumple 10 dígitos -->
+                <template x-if="dataForm.telefono !== '' && !telefonoValido">
+                    <p class="mt-1 text-red-500 text-sm">
+                        El número de teléfono debe tener exactamente 10 dígitos.
+                    </p>
+                </template>
+            </div>
+
+            <!-- DIRECCIÓN -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Dirección</label>
+                <input
+                    type="text"
+                    x-model="dataForm.direccion"
+                    x-on:input="dataForm.direccion = dataForm.direccion.slice(0, 50)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- CATEGORIA -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Categoria</label>
+                <select
+                    x-model="dataForm.categoria"
+                    class="w-full p-2 border rounded"
+                    required>
+                    <option value="">Selecciona una categoria</option>
+                    <option value="medicamentos_farmaceuticos">Medicamentos y productos farmacéuticos</option>
+                    <option value="alimentos_nutricion">Alimentos y nutrición</option>
+                    <option value="accesorios_mascotas">Accesorios para mascotas</option>
+                    <option value="limpieza_desinfeccion">Productos de limpieza y desinfección</option>
+                </select>
+            </div>
+
+            <!-- BOTÓN GUARDAR -->
+            <div class="w-1/3">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Guardar
+                </button>
+            </div>
+        </form>
     </div>
 
     <div x-show="tab === 'cliente'" class="p-4 bg-gray-100 rounded-lg">
         <h2 class="text-lg font-semibold">Información de Cliente</h2>
         <p>Contenido relacionado con los clientes...</p>
     </div>
-</div>
-<script>
-    function formData() {
-        return {
-            // Variables
-            identificacion: '',
-            nombres: '',
-            apellidos: '',
-            email: '',
-            emailValido: false,
-            telefono: '',
-            telefonoValido: false,
-            direccion: '',
-            especialidad: '',
-            horario_atencion: '',
 
-            // Valida el formato del email con una expresión regular
+    <div x-show="tab === 'mascota'" class="p-4 bg-gray-100 rounded-lg">
+        <h2 class="text-lg font-semibold">Información de Mascota</h2>
+        <p>Contenido relacionado con los mascota...</p>
+    </div>
+    <!-- Fin del código para el contenedor de cada pestaña -->
+</div>
+
+<script>
+    function sharedMethods() {
+        return {
+
+            // Devuelve los métodos y variables a sus componentes hijos o donde es llamado ...sharedMethods
+
+            emailValido: false,
+            telefonoValido: false,
+
             validarEmail(valor) {
                 const regex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
                 return regex.test(valor);
             },
 
-            async submitForm(event) {
+            validarTelefono(valor) {
+                return valor.length === 10;
+            },
 
-                // Validación adicional de teléfono y email
-                if (!this.telefonoValido) {
-                    Swal.fire({
-                        title: 'Teléfono no válido',
-                        text: 'El número de teléfono ingresado no cumple los 10 dígitos.',
-                        icon: 'warning'
-                    });
-                    return;
-                }
-                if (!this.emailValido) {
-                    Swal.fire({
-                        title: 'Correo no válido',
-                        text: 'El correo electrónico ingresado no es correcto.',
-                        icon: 'warning'
-                    });
-                    return;
-                }
-
-                // 3) Enviar los datos a tu endpoint
+            async enviarDatos(url, datos) {
                 try {
-                    const response = await fetch('/api/veterinarios', {
+                    const response = await fetch(url, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({
-                            identificacion: this.identificacion,
-                            nombres: this.nombres,
-                            apellidos: this.apellidos,
-                            email: this.email,
-                            telefono: this.telefono,
-                            direccion: this.direccion,
-                            especialidad: this.especialidad,
-                            horario_atencion: this.horario_atencion
-                        })
+                        body: JSON.stringify(datos)
                     });
 
                     if (!response.ok) {
                         const errorData = await response.json();
                         Swal.fire({
                             title: 'Error al guardar',
-                            text: '',
+                            text: errorData.message || 'Error desconocido',
                             icon: 'error'
                         });
                         return;
@@ -243,18 +338,123 @@
                     const data = await response.json();
                     Swal.fire({
                         title: 'Guardado',
-                        text: 'Veterinario creado exitosamente',
+                        text: 'Datos guardados exitosamente',
                         icon: 'success'
                     });
 
-                    // Ejemplo: limpiar el formulario o redirigir
-                    // this.identificacion = '';
-                    // this.nombres = '';
-                    // ... etc ...
                 } catch (error) {
                     console.error('Error en la petición:', error);
                     alert('Ocurrió un error inesperado.');
                 }
+            }
+        }
+    }
+
+    function formVeterinario() {
+        return {
+
+            // Retorna variables y métodos para que sean utilizados en el formulario de forma reactiva
+
+            ...sharedMethods(),
+            dataForm: {
+                identificacion: '',
+                nombres: '',
+                apellidos: '',
+                email: '',
+                telefono: '',
+                direccion: '',
+                especialidad: '',
+                horario_atencion: '',
+            },
+
+            submitForm() {
+                if (!this.validarTelefono(this.dataForm.telefono)) {
+                    Swal.fire({
+                        title: 'Teléfono no válido',
+                        text: 'El teléfono debe tener 10 dígitos.',
+                        icon: 'warning'
+                    });
+                    return;
+                }
+                if (!this.validarEmail(this.dataForm.email)) {
+                    Swal.fire({
+                        title: 'Correo no válido',
+                        text: 'Ingrese un correo electrónico válido.',
+                        icon: 'warning'
+                    });
+                    return;
+                }
+
+                this.enviarDatos('/api/veterinarios', this.dataForm);
+            }
+        }
+    }
+
+    function formProveedor() {
+        return {
+            ...sharedMethods(),
+            dataForm: {
+                identificacion: '',
+                nombres: '',
+                apellidos: '',
+                email: '',
+                telefono: '',
+                direccion: '',
+                categoria: '',
+            },
+
+            submitForm() {
+                if (!this.validarTelefono(this.telefono)) {
+                    Swal.fire({
+                        title: 'Teléfono no válido',
+                        text: 'El teléfono debe tener 10 dígitos.',
+                        icon: 'warning'
+                    });
+                    return;
+                }
+                if (!this.validarEmail(this.email)) {
+                    Swal.fire({
+                        title: 'Correo no válido',
+                        text: 'Ingrese un correo electrónico válido.',
+                        icon: 'warning'
+                    });
+                    return;
+                }
+
+                this.enviarDatos('/api/proveedores', this.dataForm);
+            }
+        }
+    }
+
+    function formCliente() {
+        return {
+            ...sharedMethods(),
+            identificacion: '',
+            nombres: '',
+            apellidos: '',
+            email: '',
+            telefono: '',
+            direccion: '',
+
+            submitForm() {
+                if (!this.validarTelefono(this.dataForm.telefono)) {
+                    Swal.fire({
+                        title: 'Teléfono no válido',
+                        text: 'El teléfono debe tener 10 dígitos.',
+                        icon: 'warning'
+                    });
+                    return;
+                }
+                if (!this.validarEmail(this.dataForm.email)) {
+                    Swal.fire({
+                        title: 'Correo no válido',
+                        text: 'Ingrese un correo electrónico válido.',
+                        icon: 'warning'
+                    });
+                    return;
+                }
+
+                this.enviarDatos('/api/clientes', this);
             }
         }
     }
