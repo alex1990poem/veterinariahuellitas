@@ -6,7 +6,7 @@
 <h1 class="text-xl font-semibold mb-6">Gestión</h1>
 
 <div x-data="{ tab: 'veterinario' }" class="space-y-4">
-    <!-- Inicio del código para pestañas --> 
+    <!-- Inicio del código para pestañas -->
     <div class="flex space-x-4 border-b-2 border-gray-200 w-full">
         <button
             @click="tab = 'veterinario'"
@@ -104,7 +104,7 @@
                     x-model="dataForm.telefono"
                     x-on:input="
                     dataForm.telefono = dataForm.telefono.replace(/[^0-9]/g, '').slice(0, 10);
-                    telefonoValido = (dataForm.telefono.length === 10);
+                    telefonoValido = validarTelefono(dataForm.telefono);
                 "
                     class="w-full p-2 border rounded"
                     required>
@@ -235,7 +235,7 @@
                     x-model="dataForm.telefono"
                     x-on:input="
                     dataForm.telefono = dataForm.telefono.replace(/[^0-9]/g, '').slice(0, 10);
-                    telefonoValido = (dataForm.telefono.length === 10);
+                    telefonoValido = validarTelefono(dataForm.telefono);
                 "
                     class="w-full p-2 border rounded"
                     required>
@@ -291,7 +291,112 @@
 
     <div x-show="tab === 'mascota'" class="p-4 bg-gray-100 rounded-lg">
         <h2 class="text-lg font-semibold">Información de Mascota</h2>
-        <p>Contenido relacionado con los mascota...</p>
+        <form
+            x-data="formMascota()"
+            x-on:submit.prevent="submitForm"
+            class="flex flex-col space-y-4">
+            <!-- IDENTIFICACIÓN MASCOTA -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Identificación</label>
+                <input
+                    type="text"
+                    x-model="dataForm.identificacion"
+                    x-on:input="dataForm.identificacion = dataForm.identificacion.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- IDENTIFICACIÓN CLIENTE -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Identificación Cliente</label>
+                <input
+                    type="text"
+                    x-model="dataForm.identificacion_cliente"
+                    x-on:input="dataForm.identificacion_cliente = dataForm.identificacion_cliente.replace(/[^a-zA-Z0-9]/g, '').slice(0, 11)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- NOMBRES -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Nombres</label>
+                <input
+                    type="text"
+                    x-model="dataForm.nombres"
+                    x-on:input="dataForm.nombres = dataForm.nombres.replace(/[^a-zA-Z\s]/g, '').replace(/\s{2,}/g, ' ').slice(0, 50)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- PESO MASCOTA -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Peso</label>
+                <div class="flex rounded-md shadow-sm">
+                    <input
+                        type="text"
+                        x-model="dataForm.peso"
+                        x-on:input="dataForm.peso = dataForm.peso.match(/^\d{0,5}(\.\d{0,2})?$/) ? dataForm.peso : dataForm.peso.slice(0, -1);"
+                        class="flex-1 p-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                    <select
+                        x-model="dataForm.unidad"
+                        class="p-2 border border-l-0 rounded-r-md bg-gray-100 focus:outline-none">
+                        <option value="GR">GR</option>
+                        <option value="KG">KG</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- EDAD -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Edad</label>
+                <input
+                    type="text"
+                    x-model="dataForm.edad"
+                    x-on:input="dataForm.edad = dataForm.edad.replace(/[^0-9]/g, '').slice(0, 5)"
+                    class="w-full p-2 border rounded"
+                    required>
+            </div>
+
+            <!-- SEXO -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Sexo</label>
+                <select
+                    x-model="dataForm.sexo"
+                    class="w-full p-2 border rounded"
+                    required>
+                    <option value="">Selecciona un tipo de sexo</option>
+                    <option value="macho">Macho</option>
+                    <option value="hembra">Hembra</option>
+                </select>
+            </div>
+
+            <!-- TIPO DE MASCOTA -->
+            <div class="w-1/3">
+                <label class="block text-sm font-medium">Tipo de Mascota</label>
+                <select
+                    x-model="dataForm.tipo_mascota"
+                    class="w-full p-2 border rounded"
+                    required>
+                    <option value="">Selecciona un tipo de mascota</option>
+                    <option value="canino">Canino</option>
+                    <option value="felino">Felino</option>
+                    <option value="aves">Aves</option>
+                    <option value="acuatico">Acuático</option>
+                    <option value="reptil">Reptil</option>
+                    <option value="mamífero">Mamífero</option>
+                </select>
+            </div>
+
+            <!-- BOTÓN GUARDAR -->
+            <div class="w-1/3">
+                <button
+                    type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                    Guardar
+                </button>
+            </div>
+        </form>
     </div>
     <!-- Fin del código para el contenedor de cada pestaña -->
 </div>
@@ -404,7 +509,7 @@
             },
 
             submitForm() {
-                if (!this.validarTelefono(this.telefono)) {
+                if (!this.validarTelefono(this.dataForm.telefono)) {
                     Swal.fire({
                         title: 'Teléfono no válido',
                         text: 'El teléfono debe tener 10 dígitos.',
@@ -412,7 +517,7 @@
                     });
                     return;
                 }
-                if (!this.validarEmail(this.email)) {
+                if (!this.validarEmail(this.dataForm.email)) {
                     Swal.fire({
                         title: 'Correo no válido',
                         text: 'Ingrese un correo electrónico válido.',
@@ -457,6 +562,28 @@
                 this.enviarDatos('/api/clientes', this);
             }
         }
+
+    }
+
+    function formMascota() {
+        return {
+            ...sharedMethods(),
+            dataForm: {
+                identificacion: '',
+                identificacion_cliente: '',
+                nombres: '',
+                peso: '',
+                unidad: '',
+                edad: '',
+                sexo: '',
+                tipo_mascota: '',
+            },
+
+            submitForm() {
+                this.enviarDatos('/api/mascota', this);
+            }
+        }
+
     }
 </script>
 @endsection

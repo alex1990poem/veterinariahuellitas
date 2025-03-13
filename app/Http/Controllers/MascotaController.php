@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Veterinario;
+use App\Models\Mascota;
 
-class VeterinarioController extends Controller
+class MascotaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,23 +29,22 @@ class VeterinarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'identificacion' => 'required|string|max:11|unique:veterinarios',
+            'identificacion' => 'required|string|max:11|unique:mascotas',
+            'identificacion_cliente' => 'required|string|max:11',
             'nombres' => 'required|string|max:50',
-            'apellidos' => 'required|string|max:50',
-            'email' => 'required|string|email|max:50',
-            'telefono' => 'required|string|size:10',
-            'direccion' => 'required|string|max:50',
-            'especialidad' => 'required|string',
-            'horario_atencion' => 'required|string',
-
+            'peso' => 'required|numeric|min:0|max:99999.99',
+            'unidad' => 'required|string|in:KG,GR',
+            'edad' => 'required|integer|min:0',
+            'sexo' => 'required|string',
+            'tipo_mascota' => 'required|string',
         ]);
 
-        $veterinario = Veterinario::create($request->all());
+        $mascota = Mascota::create($request->all());
 
         return response()->json([
-            'message' => 'Veterinario creado exitosamente',
-            'data' => $veterinario
-        ], 201); // Código HTTP 201 Created
+            'message' => 'Mascota creada exitosamente',
+            'data' => $mascota,
+        ], 201);
     }
 
     /**

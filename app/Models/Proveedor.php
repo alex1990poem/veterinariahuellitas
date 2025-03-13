@@ -1,16 +1,15 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Veterinario extends Model
+class Proveedor extends Model
 {
-    use HasFactory; 
+    use HasFactory;
 
-    protected $table = 'veterinarios';
-    
+    protected $table = 'proveedores';
+
     protected $fillable = [
         'identificacion',
         'nombres',
@@ -18,7 +17,6 @@ class Veterinario extends Model
         'email',
         'telefono',
         'direccion',
-        'especialidad',
-        'horario_atencion',
+        'categoria',
     ];
 }

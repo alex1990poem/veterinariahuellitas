@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Veterinario;
+use App\Models\Proveedor;
 
-class VeterinarioController extends Controller
+class ProveedorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,23 +29,21 @@ class VeterinarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'identificacion' => 'required|string|max:11|unique:veterinarios',
+            'identificacion' => 'required|string|max:11|unique:proveedores',
             'nombres' => 'required|string|max:50',
             'apellidos' => 'required|string|max:50',
             'email' => 'required|string|email|max:50',
             'telefono' => 'required|string|size:10',
             'direccion' => 'required|string|max:50',
-            'especialidad' => 'required|string',
-            'horario_atencion' => 'required|string',
-
+            'categoria' => 'required|string|max:50',
         ]);
 
-        $veterinario = Veterinario::create($request->all());
+        $proveedor = Proveedor::create($request->all());
 
         return response()->json([
-            'message' => 'Veterinario creado exitosamente',
-            'data' => $veterinario
-        ], 201); // Código HTTP 201 Created
+            'message' => 'Proveedor creado exitosamente',
+            'data' => $proveedor
+        ], 201);
     }
 
     /**
