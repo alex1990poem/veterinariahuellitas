@@ -655,7 +655,7 @@
                     return;
                 }
 
-                this.enviarDatos('/api/cliente', this);
+                this.enviarDatos('/api/clientes', this);
             }
         }
 
@@ -676,7 +676,7 @@
             },
 
             submitForm() {
-                this.enviarDatos('/api/mascota', this);
+                this.enviarDatos('/api/mascotas', this);
             }
         }
 
