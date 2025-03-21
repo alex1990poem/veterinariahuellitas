@@ -18,7 +18,7 @@
         </style>
     </head>
     <body class="bg-gray-100">
-        <nav class="bg-gradient-custom p-4 pl-15 pr-10 flex justify-between items-center shadow-md">
+        <nav class="fixed top-0 left-0 w-full bg-gradient-custom p-4 pl-15 pr-10 flex justify-between items-center shadow-md z-50">
             <div class="flex items-center space-x-4">
                 <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-25 h-18">
                 <div class="text-[#06332b] text-xl font-bold">
@@ -27,7 +27,7 @@
             </div>
             <ul class="flex space-x-6">
                 <li><a href="management" class="text-white hover:text-[#06332b]">Gestión</a></li>
-                <li><a href="#" class="text-white hover:text-[#06332b]">Citas</a></li>
+                <li><a href="appointment" class="text-white hover:text-[#06332b]">Citas</a></li>
                 <li><a href="#" class="text-white hover:text-[#06332b]">Inventario</a></li>
                 <li><a href="#" class="text-white hover:text-[#06332b]">Compras</a></li>
                 <li><a href="#" class="text-white hover:text-[#06332b]">Ventas</a></li>
@@ -35,7 +35,7 @@
             </ul>
         </nav>
 
-        <div class="p-6 container max-w-full">
+        <div class="p-6 container max-w-full mt-28">
             @yield('content')
         </div>
     </body>

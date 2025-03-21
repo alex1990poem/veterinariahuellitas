@@ -6,8 +6,11 @@ use App\Http\Controllers\VeterinarioController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\MascotaController;
+use App\Http\Controllers\CitaController;
+
 
 Route::apiResource('veterinarios', VeterinarioController::class);
 Route::apiResource('proveedores', ProveedorController::class);
 Route::apiResource('clientes', ClienteController::class);
 Route::apiResource('mascotas', MascotaController::class);
+Route::apiResource('citas', CitaController::class);
