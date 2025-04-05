@@ -436,6 +436,7 @@
                     <select
                         x-model="dataForm.unidad"
                         class="p-2 border border-l-0 rounded-r-md bg-gray-100 focus:outline-none">
+                        <option value="">Selecciona una unidad</option>
                         <option value="GR">GR</option>
                         <option value="KG">KG</option>
                     </select>
